@@ -75,7 +75,7 @@ const History = ({navigation}) => {
         <View style={styles.itemLogo}>
           <Image
             style={styles.itemImage}
-            source={require('E:\ShopV4\src\assets\clothing.png')}
+            source={require('../assets/clothing.png')}
           />
         </View>
         <View style={styles.itemBody}>

@@ -6,15 +6,18 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 import Home from './src/pages/Home';
 import History from './src/pages/History';
+import SlideMenu from './src/pages/SlideMenu';
+import { Button, View, Text } from 'react-native';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode="none">
+      <Stack.Navigator headerMode="none" initialRouteName="Home">
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="History" component={History} />
+        <Stack.Screen name="SlideMenu" component={SlideMenu} />
       </Stack.Navigator>
     </NavigationContainer>
   );
