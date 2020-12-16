@@ -4,10 +4,11 @@ import {
     View,
 } from 'react-native';
 import CardDeal from "./CardDeal";
-const Items = ({item, navigation}) => {
+const Items = ({item, navigation, setCart}) => {
     return (
         < View style={styles.rowView}>
             <CardDeal 
+             setCart={setCart}
             item = {item}
             navigation ={navigation}
             />

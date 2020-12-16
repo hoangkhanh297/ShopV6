@@ -1,26 +1,24 @@
-import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity, TextInput} from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Icon1 from 'react-native-vector-icons/AntDesign';
-import {TextInput} from 'react-native-gesture-handler';
-const SearchBar = ({navigation}) => {
+const SearchBar = ({navigation,cart}) => {
   return (
     <View style={styles.container}>
       <Icon name="menu" size={30} color="#222" style={styles.menu}/>
       <View style={styles.searchBar}>
-        <TouchableOpacity onPress={()=>{
-            navigation.navigate('SlideMenu');
-        }} >
-        <Icon name="search" size={20} color="gray" />
-        <Text>Menu</Text>
-        </TouchableOpacity>
+          <Icon name="search" size={20} color="gray" />
         <TextInput placeholder="Search" style={styles.input} />
       </View>
       <View style={styles.cart}>
+         <TouchableOpacity onPress={()=>{
+            navigation.navigate('History');
+        }} >
         <Icon1 name="shoppingcart" size={30} color="gray" style={styles.cart}/>
         <View style={styles.badge}>
-          <Text style={styles.badgeText}>4</Text>
+          <Text style={styles.badgeText}>{cart}</Text>
         </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

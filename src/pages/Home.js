@@ -11,8 +11,9 @@ import Items from "../components/Home/Items";
 
 const Home = ({navigation}) => {
     const [data, setData] = useState([])
+    const [cart, setCart]=useState(0)
     useEffect(() => {
-        fetch('http://10.20.28.201:8888/login')
+        fetch('http://192.168.137.1:8888/login')
             .then((response) => response.json())
             .then((json) => setData(json))
             .catch((error) => console.error(error));
@@ -20,6 +21,7 @@ const Home = ({navigation}) => {
     const renderItem = ({ item }) => (
         <View>
             <Items
+                setCart={()=>{setCart(cart + 1)}}
                 item={item} 
                 navigation ={navigation}/>
         </View>
@@ -27,17 +29,12 @@ const Home = ({navigation}) => {
     );
     return (
         <View style={styles.container}>
-            <SearchBar navigation={navigation}></SearchBar>
+            <SearchBar navigation={navigation} cart={cart}></SearchBar>
             <FlatList
                 data={data}
                 keyExtractor={item => item.id}
                 renderItem={renderItem}
             />
-            {/* <Text>Public Landing Screen</Text>
-            <Button
-                title="Go to Sign In"
-                onPress={() => navigation.navigate('History')}
-            /> */}
         </View>
 
     );

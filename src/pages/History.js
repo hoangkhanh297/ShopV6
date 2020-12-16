@@ -6,10 +6,10 @@ import {
   Dimensions,
   FlatList,
   Image,
+  TouchableOpacity
 } from 'react-native';
 import HeaderBar from '../components/History/HeaderBar';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const dataExample = [

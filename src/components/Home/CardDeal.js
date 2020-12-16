@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
-const CardDeal = ({ item, navigation }) => {
+const CardDeal = ({ item, navigation, setCart }) => {
+ 
   return (
     <View style={styles.container}>
       <Image
@@ -16,7 +17,7 @@ const CardDeal = ({ item, navigation }) => {
         <Text style={styles.bodyTime}>Close at: {item.endIn}</Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('History')} ><Text>Add to Cart</Text>
+          onPress={setCart} ><Text>Add to Cart</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.saleOff}>
