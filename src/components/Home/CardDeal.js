@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 const screenWidth = Dimensions.get('window').width;
-const CardDeal = ({ item, navigation, setCart }) => {
+const CardDeal = ({ item, setCart }) => {
  
   return (
     <View style={styles.container}>
