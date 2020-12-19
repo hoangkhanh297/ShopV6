@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, FlatList, Button} from 'react-native';
 import SearchBar from '../components/Home/SearchBar';
-import CardDeal from '../components/Home/CardDeal';
+import Items from '../components/Home/Items';
+import Card from '../components/Home/Card';
 
-const Home = ({navigation}) => {
+const Cart = ({navigation}) => {
   const [data, setData] = useState([]);
   const [cart, setCart] = useState(0);
   const [searchInput, setSearchInput] = useState('');
@@ -32,7 +33,7 @@ const Home = ({navigation}) => {
   };
   const renderItem = ({item}) => (
     <View>
-      <CardDeal
+      <Card
         setCart={() => {
           setCart(cart + 1);
           addToCart();
@@ -57,7 +58,7 @@ const Home = ({navigation}) => {
   );
 };
 
-export default Home;
+export default Cart;
 
 const styles = StyleSheet.create({
   container: {

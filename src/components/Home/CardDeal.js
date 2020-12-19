@@ -1,8 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
 const screenWidth = Dimensions.get('window').width;
-const CardDeal = ({ item, setCart }) => {
- 
+const CardDeal = ({item, setCart}) => {
   return (
     <View style={styles.container}>
       <Image
@@ -12,12 +18,14 @@ const CardDeal = ({ item, setCart }) => {
       <View style={styles.body}>
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.bodyDescription}>{item.description}</Text>
-        <Text style={styles.bodyPrice}> ${item.price - (item.price * item.saleOffText) / 100}</Text>
+        <Text style={styles.bodyPrice}>
+          {' '}
+          ${(item.price - (item.price * item.saleOffText) / 100).toFixed(2)}
+        </Text>
         <Text style={styles.bodyPriceOri}>${item.price}</Text>
         <Text style={styles.bodyTime}>Close at: {item.endIn}</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={setCart} ><Text>Add to Cart</Text>
+        <TouchableOpacity style={styles.button} onPress={setCart}>
+          <Text>Add to Cart</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.saleOff}>
@@ -35,7 +43,7 @@ const styles = StyleSheet.create({
     padding: 10,
     shadowColor: '#222',
     width: screenWidth - 15,
-    shadowOffset: { width: 2, height: 2 },
+    shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.2,
     shadowRadius: 5,
     borderRadius: 8,
@@ -47,13 +55,13 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 17,
-    fontWeight: "bold"
+    fontWeight: 'bold',
   },
   button: {
-    alignItems: "center",
-    backgroundColor: "#669900",
+    alignItems: 'center',
+    backgroundColor: '#669900',
     padding: 10,
-    marginLeft: 100
+    marginLeft: 100,
   },
   image: {
     width: 50,
@@ -64,7 +72,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
 
-
   bodyDescription: {
     fontSize: 14,
   },
@@ -74,13 +81,13 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 16,
     marginVertical: 3,
-    marginRight: 10
+    marginRight: 10,
   },
 
   bodyPriceOri: {
     color: '#222',
     textDecorationLine: 'line-through',
-    marginRight: 5
+    marginRight: 5,
   },
 
   bodyTime: {

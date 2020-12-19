@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,65 +6,26 @@ import {
   Dimensions,
   FlatList,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import HeaderBar from '../components/History/HeaderBar';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-const dataExample = [
-  {
-    name: 'Coat',
-    price: '$10',
-    color: 'Black',
-    size: 'XL',
-    status: 'Comming',
-  },
-  {
-    name: 'Whale toy',
-    price: '$20',
-    color: 'Black',
-    size: 'XL',
-    status: 'Received',
-  },
-  {
-    name: 'Rabbit',
-    price: '$10',
-    color: 'Black',
-    size: 'XL',
-    status: 'Comming',
-  },
-  {
-    name: 'Bodysuit',
-    price: '$22',
-    color: 'Black',
-    size: 'XL',
-    status: 'Comming',
-  },
-  {
-    name: 'Whale',
-    price: '$10',
-    color: 'Black',
-    size: 'XL',
-    status: 'Comming',
-  },
-  {
-    name: 'Clothing',
-    price: '$10',
-    color: 'Black',
-    size: 'XL',
-    status: 'Received',
-  },
-];
-
 const History = ({navigation}) => {
   const [status, setStatus] = useState('All');
-  const [data, setData] = useState(dataExample);
-  const setStatusFilter = status => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch('http://192.168.0.111:8888/history')
+      .then((response) => response.json())
+      .then((json) => setData(json))
+      .catch((error) => console.error(error));
+  }, []);
+  const setStatusFilter = (status) => {
     if (status != 'All') {
-      setData([...dataExample.filter(e => e.status == status)]);
+      setData([...data.filter((e) => e.status == status)]);
     } else {
-      setData(dataExample);
+      setData(data);
     }
 
     setStatus(status);
@@ -80,16 +41,15 @@ const History = ({navigation}) => {
         </View>
         <View style={styles.itemBody}>
           <Text style={styles.itemName}>{item.name}</Text>
-          <Text style={styles.itemPrice}>{item.price}</Text>
+          <Text style={styles.itemPrice}>${item.price}</Text>
           <View style={styles.itemcolorsize}>
             <Text style={styles.itemColor}>Color: {item.color}</Text>
-            <Text style={styles.itemSize}>Color: {item.size}</Text>
+            <Text style={styles.itemSize}>Sizd: {item.size}</Text>
           </View>
         </View>
         <View
           style={[
             styles.itemStatus,
-
             {
               backgroundColor:
                 item.status == 'Received' ? '#E5848E' : '#69C080',
