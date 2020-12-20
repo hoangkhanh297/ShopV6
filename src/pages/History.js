@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,31 +6,56 @@ import {
   Dimensions,
   FlatList,
   Image,
-  TouchableOpacity,
+  TextInput,
+  TouchableOpacity
 } from 'react-native';
 import HeaderBar from '../components/History/HeaderBar';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/AntDesign';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const History = ({navigation}) => {
+const History = ({ navigation }) => {
   const [status, setStatus] = useState('All');
   const [data, setData] = useState([]);
+  const [fromDate, setFromDate] = useState(new Date())
+  const [toDate, setToDate] = useState(new Date())
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+
+  const showDatePicker = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const handleFromDateConfirm = (date) => {
+    console.log("A date has been picked: ", date);
+    setFromDate(date);
+    hideDatePicker();
+  };
+
+  const handleToDateConfirm = (date) => {
+    console.log("A date has been picked: ", date);
+    setToDate(date);
+    hideDatePicker();
+  };
   useEffect(() => {
     fetch('http://192.168.0.111:8888/history')
       .then((response) => response.json())
       .then((json) => setData(json))
       .catch((error) => console.error(error));
   }, []);
-  const setStatusFilter = (status) => {
+  const setStatusFilter = status => {
     if (status != 'All') {
-      setData([...data.filter((e) => e.status == status)]);
+      setData([...data.filter(e => e.status == status)]);
     } else {
       setData(data);
     }
 
     setStatus(status);
   };
-  const renderItem = ({item}) => {
+  const renderItem = ({ item }) => {
     return (
       <View style={styles.itemContainer}>
         <View style={styles.itemLogo}>
@@ -61,7 +86,7 @@ const History = ({navigation}) => {
     );
   };
   const separator = () => {
-    return <View style={{height: 1, backgroundColor: '#F1F1F1'}} />;
+    return <View style={{ height: 1, backgroundColor: '#F1F1F1' }} />;
   };
   return (
     <SafeAreaView style={styles.container}>
@@ -72,7 +97,7 @@ const History = ({navigation}) => {
             style={[
               styles.btnTab,
               status == 'All' && styles.btnTabActive,
-              {borderTopLeftRadius: 5, borderBottomLeftRadius: 5},
+              { borderTopLeftRadius: 5, borderBottomLeftRadius: 5 },
             ]}
             onPress={() => setStatusFilter('All')}>
             <Text
@@ -96,7 +121,7 @@ const History = ({navigation}) => {
             style={[
               styles.btnTab,
               status == 'Received' && styles.btnTabActive,
-              {borderTopRightRadius: 5, borderBottomRightRadius: 5},
+              { borderTopRightRadius: 5, borderBottomRightRadius: 5 },
             ]}>
             <Text
               style={[
@@ -110,14 +135,28 @@ const History = ({navigation}) => {
         <View style={styles.dateFilterContainer}>
           <View style={styles.dateFilter}>
             <Text style={styles.textFrom}>
-              From <Text style={styles.textDate}>10/11/2018</Text>{' '}
-              <Icon name="caretdown" />{' '}
+              From:
+              <TextInput style={styles.date}>{fromDate.toDateString()}</TextInput> 
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleFromDateConfirm}
+                onCancel={hideDatePicker}
+              />
+              <Icon onPress={showDatePicker} name="calendar" />{' '}
             </Text>
           </View>
           <View style={styles.dateFilter}>
             <Text style={styles.textFrom}>
-              To <Text style={styles.textDate}>10/11/2018</Text>{' '}
-              <Icon name="caretdown" />{' '}
+              To 
+              <TextInput style={styles.date}>{toDate.toDateString()}</TextInput>
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleToDateConfirm}
+                onCancel={hideDatePicker}
+              />
+              <Icon onPress={showDatePicker} name="calendar" />{' '}
             </Text>
           </View>
         </View>
@@ -189,7 +228,7 @@ const styles = StyleSheet.create({
   },
 
   dateFilterContainer: {
-    flexDirection: 'row',
+    // flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: 30,
     paddingVertical: 20,
@@ -240,4 +279,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     // alignItems: 'center',
   },
+  date:{
+    
+  }
 });
